@@ -4,8 +4,12 @@
   "author": "Galileo Sartor <galileo.sartor@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "prepare:firefox": "python3 -B manifest_build.py firefox",
+    "prepare:chrome": "python3 -B manifest_build.py chrome",
     "dev:firefox": "web-ext run",
-    "dev:chrome": "web-ext run -t chromium",
+    "dev:chrome": "web-ext run --chromium",
+    "publish:firefox": "web-ext sign --api-key $AMO_SIGN_KEY --api-secret $AMO_SIGN_SECRET --channel unlisted",
+    "lint": "web-ext lint",
     "build": "web-ext build",
     "clean": "rm -rf web-ext-artifacts"
   },

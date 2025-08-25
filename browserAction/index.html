@@ -2,11 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <link href="style.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StreetPassRSS Feeds</title>
+    <link href="style.css" rel="stylesheet" />
   </head>
   <body>
-    <h1 id="myHeading">Recorded Feeds</h1>
+    <h1 id="myHeading">Feeds</h1>
+    <ul id="feedsList"></ul>
+    <template id="feed-item-template">
+      <li class="feed-item">
+        <div class="feed-top-row">
+          <span class="feed-bin" title="Hide feed">🗑️</span>
+          <a class="feed-link" target="_blank"></a>
+        </div>
+        <details class="feed-article-titles"></details>
+      </li>
+    </template>
     <script src="script.js"></script>
   </body>
 </html>

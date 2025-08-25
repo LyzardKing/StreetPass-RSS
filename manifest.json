@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "StreetPassRSS",
   "summary": "A web extension that automatically discovers and records RSS feeds from visited pages, with options to manage and export your feed list.",
-  "version": "0.0.1",
+  "version": "VERSION",
   "icons": {
     "64": "icons/rss.png"
   },
@@ -33,7 +33,7 @@
     "default_title": "StreetPassRSS"
   },
   "options_ui": {
-    "page": "options.html"
+    "page": "settings/options.html"
   },
   "browser_specific_settings": {
     "gecko": {
