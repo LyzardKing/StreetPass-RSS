@@ -3,6 +3,7 @@
   "name": "StreetPassRSS",
   "summary": "A web extension that automatically discovers and records RSS feeds from visited pages, with options to manage and export your feed list.",
   "version": "VERSION",
+  "homepage_url": "https://github.com/LyzardKing/StreetPass-RSS",
   "icons": {
     "64": "icons/rss.png"
   },

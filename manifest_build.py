@@ -3,17 +3,27 @@ import sys
 
 manifest_path = "manifest.json"
 
-if len(sys.argv) < 2 or sys.argv[1] not in ("firefox", "chrome"):
+if len(sys.argv) < 2 or sys.argv[1] not in ("firefox", "chrome", "reset"):
     print("Usage: python update_manifest.py [firefox|chrome]")
     sys.exit(1)
+
+with open(manifest_path, "r") as f:
+    manifest = json.load(f)
+
+if sys.argv[1] == "reset":
+    print("Resetting manifest.json to default state.")
+    manifest["background"] = {
+        "scripts": ["background_script.js"],
+    }
+    manifest["version"] = "VERSION"
+    with open(manifest_path, "w") as f:
+        json.dump(manifest, f, indent=2)
+    sys.exit(0)
 
 browser = sys.argv[1]
 
 with open("version.txt", "r") as f:
     version = f.read().strip()
-
-with open(manifest_path, "r") as f:
-    manifest = json.load(f)
 
 print(f"Setting up manifest for {browser} with version {version}")
 

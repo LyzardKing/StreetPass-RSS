@@ -6,6 +6,7 @@
   "scripts": {
     "prepare:firefox": "python3 -B manifest_build.py firefox",
     "prepare:chrome": "python3 -B manifest_build.py chrome",
+    "reset": "python3 -B manifest_build.py reset",
     "dev:firefox": "web-ext run",
     "dev:chrome": "web-ext run --chromium",
     "publish:firefox": "web-ext sign --api-key $AMO_SIGN_KEY --api-secret $AMO_SIGN_SECRET --channel unlisted",
