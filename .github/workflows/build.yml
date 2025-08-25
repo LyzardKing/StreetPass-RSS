@@ -23,7 +23,7 @@ jobs:
     steps:
       - name: "Publish to AMO"
         # run: npm run publish:firefox
-        run: web-ext sign --api-key $AMO_SIGN_KEY --api-secret $AMO_SIGN_SECRET --channel unlisted
+        run: web-ext sign --api-key $AMO_SIGN_KEY --api-secret $AMO_SIGN_SECRET --channel listed
         env:
           AMO_SIGN_KEY: ${{ secrets.AMO_SIGN_KEY }}
           AMO_SIGN_SECRET: ${{ secrets.AMO_SIGN_SECRET }}
