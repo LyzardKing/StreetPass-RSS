@@ -1,0 +1,20 @@
+{
+  "name": "streetpass-rss",
+  "description": "A web extension that automatically discovers and records RSS feeds from visited pages, with options to manage and export your feed list.",
+  "author": "Galileo Sartor <galileo.sartor@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev:firefox": "web-ext run",
+    "dev:chrome": "web-ext run -t chromium",
+    "build": "web-ext build",
+    "clean": "rm -rf web-ext-artifacts"
+  },
+  "devDependencies": {
+    "web-ext": "^7.0.0"
+  },
+  "dependencies": {},
+  "keywords": [
+    "webextension",
+    "rss"
+  ]
+}

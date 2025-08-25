@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreetPassRSS Settings</title>
+    <style>
+        :root {
+            color-scheme: light dark;
+        }
+
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 1em;
+        }
+
+        h1 {
+            font-size: 1em;
+            margin-bottom: 1em;
+            font-weight: normal;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5em;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 0.5em;
+        }
+
+        button {
+            margin-top: 1em;
+        }
+
+        #customUrlContainer {
+            display: none;
+            margin-bottom: 0.5em;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Extension Settings</h1>
+    <form id="settingsForm">
+        <label>
+            <input type="checkbox" id="hideFeeds" />
+            Show all feeds by default
+        </label>
+        <label>
+            Open feeds in:
+            <select id="openMethod">
+                <option value="none">Host URL</option>
+                <option value="https://www.inoreader.com/search/feeds/preview/">Inoreader</option>
+                <option value="https://feedly.com/i/subscription/feed/">Feedly</option>
+                <option value="https://www.newsblur.com/?url=">NewsBlur</option>
+                <option value="custom">Custom URL</option>
+            </select>
+        </label>
+        <div id="customUrlContainer">
+            <label for="customUrl">Custom URL prefix:</label>
+            <input type="text" id="customUrl" placeholder="https://your-service.com/?url=" />
+        </div>
+        <button type="submit">Save</button>
+    </form>
+    <div id="status"></div>
+    <script src="settings.js"></script>
+</body>
+
+</html>
