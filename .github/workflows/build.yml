@@ -5,8 +5,8 @@ on:
       version.txt
 
 jobs:
-  install-dependencies:
-    name: "Install Dependencies"
+  release-firefox:
+    name: "Release Firefox Add-on"
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout"
@@ -15,15 +15,9 @@ jobs:
         uses: actions/setup-node@v4
       - name: "Install Dependencies and set version"
         run: npm install --global web-ext && npm run prepare && npm run lint
-
-  release-firefox:
-    name: "Release Firefox Add-on"
-    runs-on: ubuntu-latest
-    uses: install-dependencies
-    steps:
       - name: "Publish to AMO"
         # run: npm run publish:firefox
-        run: web-ext sign --api-key $AMO_SIGN_KEY --api-secret $AMO_SIGN_SECRET --channel listed
+        run: web-ext sign --api-key $AMO_SIGN_KEY --api-secret $AMO_SIGN_SECRET --channel listed --amo-metadata amo_metadata.json
         env:
           AMO_SIGN_KEY: ${{ secrets.AMO_SIGN_KEY }}
           AMO_SIGN_SECRET: ${{ secrets.AMO_SIGN_SECRET }}

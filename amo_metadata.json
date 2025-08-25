@@ -1,0 +1,12 @@
+{
+    "summary": {
+        "en-US": "A web extension that automatically discovers and records RSS feeds from visited pages, with options to manage and export your feed list."
+    },
+    "categories": [
+        "feeds-news-blogging",
+        "bookmarks"
+    ],
+    "version": {
+        "license": "MIT"
+    }
+}
