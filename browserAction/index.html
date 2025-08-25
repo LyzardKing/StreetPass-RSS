@@ -1,23 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StreetPassRSS Feeds</title>
-    <link href="style.css" rel="stylesheet" />
-  </head>
-  <body>
-    <h1 id="myHeading">Feeds</h1>
-    <ul id="feedsList"></ul>
-    <template id="feed-item-template">
-      <li class="feed-item">
-        <div class="feed-top-row">
-          <span class="feed-bin" title="Hide feed">🗑️</span>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StreetPassRSS Feeds</title>
+  <link href="style.css" rel="stylesheet" />
+</head>
+
+<body>
+  <h1 id="myHeading">Feeds</h1>
+  <ul id="feedsList"></ul>
+  <template id="feed-item-template">
+    <li class="feed-item">
+      <details class="feed-article-titles">
+        <summary>
+          <!-- &#128465;&#65039; is the trash can emoji -->
+          <span class="feed-bin" title="Hide feed">&#128465;&#65039;</span>
           <a class="feed-link" target="_blank"></a>
-        </div>
-        <details class="feed-article-titles"></details>
-      </li>
-    </template>
-    <script src="script.js"></script>
-  </body>
+        </summary>
+      </details>
+    </li>
+  </template>
+  <template id="feed-article-template">
+    <div class="feed-article">
+      <a class="feed-article-link" target="_blank">
+      </a>
+    </div>
+  </template>
+  <script src="script.js"></script>
+</body>
+
 </html>

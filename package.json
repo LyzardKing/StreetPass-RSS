@@ -4,8 +4,7 @@
   "author": "Galileo Sartor <galileo.sartor@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "prepare:firefox": "python3 -B manifest_build.py firefox",
-    "prepare:chrome": "python3 -B manifest_build.py chrome",
+    "prepare": "python3 -B manifest_build.py set",
     "dev:firefox": "web-ext run --url https://www.omgubuntu.co.uk/",
     "dev:chrome": "web-ext run -t chromium",
     "zip:chrome": "mkdir -p web-ext-artifacts && zip -r web-ext-artifacts/streetpassrss-chrome.zip . -x \"*.git*\" -x \"node_modules/*\" -x \"web-ext-artifacts/*\" -x \"manifest_build.py\"",

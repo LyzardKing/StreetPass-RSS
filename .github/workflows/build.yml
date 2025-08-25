@@ -13,16 +13,14 @@ jobs:
         uses: actions/checkout@v4
       - name: "Setup Node and Cache"
         uses: actions/setup-node@v4
-      - name: "Install Dependencies"
-        run: npm install --global web-ext
+      - name: "Install Dependencies and set version"
+        run: npm install --global web-ext && npm run prepare && npm run lint
 
   release-firefox:
     name: "Release Firefox Add-on"
     runs-on: ubuntu-latest
     uses: install-dependencies
     steps:
-      - name: "Lint and Build"
-        run: npm run prepare:firefox && npm run lint
       - name: "Publish to AMO"
         # run: npm run publish:firefox
         run: web-ext sign --api-key $AMO_SIGN_KEY --api-secret $AMO_SIGN_SECRET --channel unlisted
@@ -30,19 +28,17 @@ jobs:
           AMO_SIGN_KEY: ${{ secrets.AMO_SIGN_KEY }}
           AMO_SIGN_SECRET: ${{ secrets.AMO_SIGN_SECRET }}
 
-  release-chrome:
-    name: "Release Chrome Add-on"
-    runs-on: ubuntu-latest
-    uses: install-dependencies
-    steps:
-      - name: "Lint and Build"
-        run: npm run prepare:chrome && npm run lint
-      - name: "Zip Chrome Extension"
-        run: npm run zip:chrome
-      - name: "Publish to Chrome Web Store"
-      - run: npx chrome-webstore-upload-cli@3
-        env:
-          EXTENSION_ID: ${{ secrets.EXTENSION_ID }}
-          CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
+  # release-chrome:
+  #   name: "Release Chrome Add-on"
+  #   runs-on: ubuntu-latest
+  #   uses: install-dependencies
+  #   steps:
+  #     - name: "Zip Chrome Extension"
+  #       run: npm run zip:chrome
+  #     - name: "Publish to Chrome Web Store"
+  #     - run: npx chrome-webstore-upload-cli@3
+  #       env:
+  #         EXTENSION_ID: ${{ secrets.EXTENSION_ID }}
+  #         CLIENT_ID: ${{ secrets.CLIENT_ID }}
+  #         CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+  #         REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}

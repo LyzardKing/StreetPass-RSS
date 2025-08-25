@@ -3,6 +3,7 @@ const browserAPI = isFirefox ? browser : chrome;
 
 const feedsList = document.getElementById('feedsList');
 const feedItemTemplate = document.getElementById('feed-item-template');
+const feedArticleTemplate = document.getElementById('feed-article-template');
 
 
 function renderFeeds(feeds) {
@@ -34,11 +35,11 @@ function renderFeeds(feeds) {
         for (const article of feed.articles) {
             console.log('Article:', article);
             if (article.title) {
-                const articleTitle = document.createElement('a');
-                articleTitle.className = 'article';
-                articleTitle.textContent = article.title;
-                articleTitle.href = article.url;
-                articlesContainer.appendChild(articleTitle);
+                const articleItem = feedArticleTemplate.content.cloneNode(true);
+                const articleLink = articleItem.querySelector('.feed-article-link');
+                articleLink.textContent = article.title;
+                articleLink.href = article.url;
+                articlesContainer.appendChild(articleItem);
             }
         }
         feedsList.appendChild(li);
