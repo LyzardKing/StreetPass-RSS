@@ -46,23 +46,29 @@
     <h1>Extension Settings</h1>
     <form id="settingsForm">
         <label>
-            <input type="checkbox" id="hideFeeds" />
+            <input type="checkbox" id="hideFeeds" name="hideFeeds" />
             Show hidden feeds
         </label>
         <label>
             Open feeds in:
-            <select id="openMethod">
+            <select id="openMethod" name="openMethod">
                 <option value="none">Host URL</option>
                 <option value="https://www.inoreader.com/search/feeds/preview/">Inoreader</option>
                 <option value="https://feedly.com/i/subscription/feed/">Feedly</option>
                 <option value="https://www.newsblur.com/?url=">NewsBlur</option>
                 <option value="custom">Custom URL</option>
             </select>
+            <div id="customUrlContainer">
+                <label for="customUrl">Custom URL prefix:</label>
+                <input type="text" id="customUrl" name="customUrl" placeholder="https://your-service.com/?url=" />
+            </div>
         </label>
-        <div id="customUrlContainer">
-            <label for="customUrl">Custom URL prefix:</label>
-            <input type="text" id="customUrl" placeholder="https://your-service.com/?url=" />
-        </div>
+        <label>
+            List of regex patterns to skip certain feeds (one per line):
+            <textarea id="skipPatterns" name="skipPatterns" style="width: 100%; height: 4em;">
+github\.com/.+?/feeds
+            </textarea>
+        </label>
         <button type="submit">Save</button>
     </form>
     <div id="status"></div>

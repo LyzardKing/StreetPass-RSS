@@ -2,33 +2,51 @@ const isFirefox = typeof browser !== 'undefined';
 const browserAPI = isFirefox ? browser : chrome;
 
 const form = document.getElementById('settingsForm');
-const hideFeedsCheckbox = document.getElementById('hideFeeds');
-const openMethodSelect = document.getElementById('openMethod');
-const customUrlInput = document.getElementById('customUrl');
-const customUrlContainer = document.getElementById('customUrlContainer');
 const statusDiv = document.getElementById('status');
 
-// Show/hide customUrl input based on openMethod
-openMethodSelect.addEventListener('change', () => {
-  customUrlContainer.style.display = openMethodSelect.value === 'custom' ? 'block' : 'none';
-});
+// Function to serialize form data into JSON
+function serializeForm(form) {
+  const formData = new FormData(form);
+  const json = {};
+  for (const [key, value] of formData.entries()) {
+    if (key === 'skipPatterns') {
+      json[key] = value.split('\n').map(s => s.trim()).filter(s => s);
+    } else {
+      json[key] = value;
+    }
+  }
+  return json;
+}
+
+// Function to populate form fields from JSON
+function populateForm(form, data) {
+  for (const [key, value] of Object.entries(data)) {
+    const field = form.elements[key];
+    if (field) {
+      if (field.type === 'checkbox') {
+        field.checked = value === 'true' || value === true;
+      } else {
+        field.value = value;
+      }
+    }
+  }
+}
 
 // Load settings
-browserAPI.storage.local.get('settings').then(result => {
-  const settings = result.settings || {};
-  hideFeedsCheckbox.checked = !!settings.hideFeeds;
-  openMethodSelect.value = settings.openMethod || 'none';
-  customUrlInput.value = settings.customUrl || '';
-  customUrlContainer.style.display = openMethodSelect.value === 'custom' ? 'block' : 'none';
-});
+(async () => {
+  try {
+    const result = await browserAPI.storage.local.get('settings');
+    const settings = result.settings || {};
+    populateForm(form, settings);
+  } catch (error) {
+    console.error('Failed to load settings:', error);
+  }
+})();
 
+// Save settings on form submission
 form.addEventListener('submit', async e => {
   e.preventDefault();
-  const settings = {
-    hideFeeds: hideFeedsCheckbox.checked,
-    openMethod: openMethodSelect.value,
-    customUrl: customUrlInput.value
-  };
+  const settings = serializeForm(form);
   await browserAPI.storage.local.set({ settings });
   statusDiv.textContent = 'Settings saved!';
   setTimeout(() => { statusDiv.textContent = ''; }, 1500);

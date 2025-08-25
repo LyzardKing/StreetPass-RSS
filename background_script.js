@@ -10,13 +10,13 @@ function storeFeeds(feeds) {
             let recordedFeeds = Array.isArray(result.recordedFeeds) ? result.recordedFeeds : [];
             feeds.forEach(feed => {
                 if (!recordedFeeds.some(f => f.href === feed.href)) {
-                    recordedFeeds.push(feed);
+                    recordedFeeds.unshift(feed);
                     browserAPI.action.setIcon({ path: 'icons/rss.png' });
                 } else {
                     let parent = recordedFeeds.find(f => f.href === feed.href);
                     console.log('Existing feed found, updating articles:', parent, feed);
                     if (!parent.articles.some(a => a.url === feed.articles[0].url)) {
-                        parent.articles.push(feed.articles[0]);
+                        parent.articles.unshift(feed.articles[0]);
                     }
                 }
             });

@@ -15,7 +15,7 @@ function searchFeedsOnPage() {
 
         if (filteredLinks.length > 0) {
             const feeds = filteredLinks.map(link => ({
-                title: link.title,
+                title: link.title || document.title,
                 href: link.href,
                 articles: [{
                     url: url,
