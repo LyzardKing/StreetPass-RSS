@@ -1,0 +1,41 @@
+name: "Publish"
+on:
+  release:
+    types: [published]
+
+jobs:
+  sign:
+    name: "Release"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v4
+
+      - name: "web-ext lint"
+        uses: kewisch/action-web-ext@v1
+        with:
+          cmd: lint
+
+      - name: "web-ext build"
+        id: web-ext-build
+        uses: kewisch/action-web-ext@v1
+        with:
+          cmd: build
+
+      - name: "web-ext sign AMO"
+        id: web-ext-sign
+        uses: kewisch/action-web-ext@v1
+        with:
+          cmd: sign
+
+          # Source must be the zip/xpi file of the add-on. If your add-on is required to submit
+          # source as per https://extensionworkshop.com/documentation/publish/source-code-submission/
+          # policy, you can use sourceCode with a zip file of the original sources. Submitting
+          # source code is not always required, don't do so if you don't need to.
+          source: ${{ steps.web-ext-build.outputs.target }}
+          channel: unlisted
+
+          # Specify API secrets. No need to specify apiUrlPrefix, it defaults to AMO production
+          apiKey: ${{ secrets.AMO_SIGN_KEY }}
+          apiSecret: ${{ secrets.AMO_SIGN_SECRET }}
+          timeout: 900000
