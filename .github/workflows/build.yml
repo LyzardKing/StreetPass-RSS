@@ -5,8 +5,8 @@ on:
       version.txt
 
 jobs:
-  sign:
-    name: "Release Firefox Add-on"
+  install-dependencies:
+    name: "Install Dependencies"
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout"
@@ -15,6 +15,12 @@ jobs:
         uses: actions/setup-node@v4
       - name: "Install Dependencies"
         run: npm install --global web-ext
+
+  release-firefox:
+    name: "Release Firefox Add-on"
+    runs-on: ubuntu-latest
+    uses: install-dependencies
+    steps:
       - name: "Lint and Build"
         run: npm run prepare:firefox && npm run lint
       - name: "Publish to AMO"
@@ -23,3 +29,20 @@ jobs:
         env:
           AMO_SIGN_KEY: ${{ secrets.AMO_SIGN_KEY }}
           AMO_SIGN_SECRET: ${{ secrets.AMO_SIGN_SECRET }}
+
+  release-chrome:
+    name: "Release Chrome Add-on"
+    runs-on: ubuntu-latest
+    uses: install-dependencies
+    steps:
+      - name: "Lint and Build"
+        run: npm run prepare:chrome && npm run lint
+      - name: "Zip Chrome Extension"
+        run: npm run zip:chrome
+      - name: "Publish to Chrome Web Store"
+      - run: npx chrome-webstore-upload-cli@3
+        env:
+          EXTENSION_ID: ${{ secrets.EXTENSION_ID }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}

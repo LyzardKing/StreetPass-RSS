@@ -6,13 +6,13 @@
   "scripts": {
     "prepare:firefox": "python3 -B manifest_build.py firefox",
     "prepare:chrome": "python3 -B manifest_build.py chrome",
-    "reset": "python3 -B manifest_build.py reset",
-    "dev:firefox": "web-ext run",
-    "dev:chrome": "web-ext run --chromium",
+    "dev:firefox": "web-ext run --url https://www.omgubuntu.co.uk/",
+    "dev:chrome": "web-ext run -t chromium",
+    "zip:chrome": "mkdir -p web-ext-artifacts && zip -r web-ext-artifacts/streetpassrss-chrome.zip . -x \"*.git*\" -x \"node_modules/*\" -x \"web-ext-artifacts/*\" -x \"manifest_build.py\"",
     "publish:firefox": "web-ext sign --api-key $AMO_SIGN_KEY --api-secret $AMO_SIGN_SECRET --channel unlisted",
     "lint": "web-ext lint",
     "build": "web-ext build",
-    "clean": "rm -rf web-ext-artifacts"
+    "clean": "rm -rf web-ext-artifacts && python3 -B manifest_build.py reset"
   },
   "devDependencies": {
     "web-ext": "^7.0.0"

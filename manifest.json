@@ -23,8 +23,7 @@
     }
   ],
   "permissions": [
-    "storage",
-    "activeTab"
+    "storage"
   ],
   "action": {
     "default_icon": {

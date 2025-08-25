@@ -30,8 +30,6 @@ print(f"Setting up manifest for {browser} with version {version}")
 # Update version
 manifest["version"] = version
 
-print(manifest)
-
 if browser == "chrome":
     # Convert scripts to service_worker
     if "background" in manifest and "scripts" in manifest["background"]:

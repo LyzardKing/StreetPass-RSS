@@ -6,6 +6,8 @@ const feedItemTemplate = document.getElementById('feed-item-template');
 
 
 function renderFeeds(feeds) {
+    // Reset icon state
+    browserAPI.action.setIcon({ path: '../icons/rss_bw.png' });
     feedsList.innerHTML = '';
     if (!feeds || feeds.length === 0) {
         feedsList.innerHTML = '<li>No feeds recorded yet.</li>';
