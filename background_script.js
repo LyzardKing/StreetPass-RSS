@@ -105,9 +105,7 @@ async function getSkipPatterns() {
 
 function getDefaultSkipPatterns() {
     return [
-        'github\\.com/.+?/feeds',
-        'stackoverflow\\.com/feeds',
-        'reddit\\.com/.+?/\\.rss'
+        'github\\.com/.+?(private\\.atom)|stackoverflow\\.com/feeds|reddit\\.com/.+?/\\.rss'
     ];
 }
 

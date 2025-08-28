@@ -111,14 +111,34 @@ async function getFeeds() {
 // }
 
 async function updateFeed(idx, updatedFeed) {
-    try {
-        const result = await browserAPI.storage.local.get('recordedFeeds');
-        const feeds = result.recordedFeeds || [];
-        feeds[idx] = updatedFeed;
-        await browserAPI.storage.local.set({ recordedFeeds: feeds });
-        await getFeeds();
-    } catch (err) {
-        console.error('Failed to update feed:', err);
+    const request = indexedDB.open("StreetPassRSS");
+
+    request.onsuccess = (event) => {
+        const db = event.target.result;
+        console.log("Client IndexedDB initialized successfully for update");
+
+        const transaction = db.transaction(['feeds'], 'readwrite');
+        const objectStore = transaction.objectStore('feeds');
+
+        const getRequest = objectStore.get(updatedFeed.href);
+        getRequest.onsuccess = (event) => {
+            const data = event.target.result;
+            if (data) {
+                objectStore.put(updatedFeed);
+                console.log('Feed updated:', updatedFeed);
+                // Refresh the feed list
+                getFeeds();
+            } else {
+                console.error('Feed not found for update:', updatedFeed.href);
+            }
+        };
+        getRequest.onerror = (event) => {
+            console.error('Error retrieving feed for update:', event);
+        };
+
+        transaction.onerror = (event) => {
+            console.error("Transaction error during update:", event.target.error);
+        };
     }
 }
 
