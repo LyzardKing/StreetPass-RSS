@@ -7,10 +7,7 @@ function searchFeedsOnPage() {
     try {
         const feedLinks = Array.from(document.querySelectorAll('link[rel="alternate"]'));
         const filteredLinks = feedLinks.filter(link =>
-            (link.type === 'application/rss+xml' || link.type === 'application/atom+xml') &&
-            // Workaround for sites that use "comments" feeds for every article
-            // Example: OMG! Ubuntu! https://www.omgubuntu.co.uk/
-            !link.title.toLowerCase().includes('comments')
+            (link.type === 'application/rss+xml' || link.type === 'application/atom+xml')
         );
 
         if (filteredLinks.length > 0) {

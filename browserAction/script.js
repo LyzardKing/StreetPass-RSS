@@ -76,13 +76,39 @@ async function setUrl(url) {
 }
 
 async function getFeeds() {
-    try {
-        const result = await browserAPI.storage.local.get('recordedFeeds');
-        renderFeeds(result.recordedFeeds || []);
-    } catch (err) {
-        console.error('Failed to get feeds:', err);
-    }
+    // Initialize IndexedDB
+    const request = indexedDB.open("StreetPassRSS");
+
+    request.onsuccess = (event) => {
+        const db = event.target.result;
+        console.log("Client IndexedDB initialized successfully");
+
+        const transaction = db.transaction(['feeds'], 'readonly');
+        const objectStore = transaction.objectStore('feeds');
+
+        objectStore.getAll().onsuccess = function (event) {
+            const feeds = event.target.result;
+            renderFeeds(feeds || []);
+        };
+
+        transaction.onerror = (event) => {
+            console.error("Transaction error:", event.target.error);
+        };
+    };
+
+    request.onerror = (event) => {
+        console.error("Client IndexedDB initialization error:", event.target.error);
+    };
 }
+
+// async function getFeeds() {
+//     try {
+//         const result = await browserAPI.storage.local.get('recordedFeeds');
+//         renderFeeds(result.recordedFeeds || []);
+//     } catch (err) {
+//         console.error('Failed to get feeds:', err);
+//     }
+// }
 
 async function updateFeed(idx, updatedFeed) {
     try {
